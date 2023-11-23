@@ -6,13 +6,10 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Controls playerControls;
-    Transform transform;
-    Vector2 movementDirection;
     Rigidbody2D rb;
 
     void Awake()
     {
-        transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         playerControls = new Controls();
         playerControls.PlayerControls.Movement.performed += ctx => UpdateSpeed(ctx.ReadValue<Vector2>());
