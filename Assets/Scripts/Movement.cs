@@ -8,19 +8,31 @@ public class Movement : MonoBehaviour
     Controls playerControls;
     Transform transform;
     Vector2 movementDirection;
+    Rigidbody2D rb;
 
     void Awake()
     {
         transform = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody2D>();
         playerControls = new Controls();
-        playerControls.PlayerControls.Movement.performed += ctx => Move(ctx.ReadValue<Vector2>());
-        //playerControls.PlayerControls.Movement.canceled += ctx => movementDirection = Vector2.zero;
+        playerControls.PlayerControls.Movement.performed += ctx => UpdateSpeed(ctx.ReadValue<Vector2>());
+        playerControls.PlayerControls.Movement.canceled += ctx => UpdateSpeed(Vector2.zero);
     }
 
-
-    void Move(Vector2 movement)
+    private void FixedUpdate()
     {
-        transform.position += new Vector3(movement.x, movement.y, 0);
+        Move();
+    }
+
+    void Move()
+    {
+        rb.MovePosition(rb.position + rb.velocity);
+    }
+
+    void UpdateSpeed(Vector2 newSpeed)
+    {
+        //movementDirection = newSpeed;
+        rb.velocity = newSpeed;
     }
 
 
