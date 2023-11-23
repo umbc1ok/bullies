@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
         rb.MovePosition(rb.position + rb.velocity);
     }
 
-    void UpdateSpeed(Vector2 newSpeed)
+    public void UpdateSpeed(Vector2 newSpeed)
     {
         //movementDirection = newSpeed;
         rb.velocity = newSpeed;

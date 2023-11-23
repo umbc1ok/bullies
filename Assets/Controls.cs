@@ -35,6 +35,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PickUpBall"",
+                    ""type"": ""Button"",
+                    ""id"": ""b359a3d8-ace2-48e4-a100-ba2b907f63e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,15 +57,44 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cbcee977-6671-4697-9e5e-e9488d6a7cb3"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickUpBall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""IDK"",
+            ""bindingGroup"": ""IDK"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // PlayerControls
         m_PlayerControls = asset.FindActionMap("PlayerControls", throwIfNotFound: true);
         m_PlayerControls_Movement = m_PlayerControls.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerControls_PickUpBall = m_PlayerControls.FindAction("PickUpBall", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +157,13 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerControls;
     private List<IPlayerControlsActions> m_PlayerControlsActionsCallbackInterfaces = new List<IPlayerControlsActions>();
     private readonly InputAction m_PlayerControls_Movement;
+    private readonly InputAction m_PlayerControls_PickUpBall;
     public struct PlayerControlsActions
     {
         private @Controls m_Wrapper;
         public PlayerControlsActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayerControls_Movement;
+        public InputAction @PickUpBall => m_Wrapper.m_PlayerControls_PickUpBall;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +176,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @PickUpBall.started += instance.OnPickUpBall;
+            @PickUpBall.performed += instance.OnPickUpBall;
+            @PickUpBall.canceled += instance.OnPickUpBall;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -143,6 +186,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @PickUpBall.started -= instance.OnPickUpBall;
+            @PickUpBall.performed -= instance.OnPickUpBall;
+            @PickUpBall.canceled -= instance.OnPickUpBall;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -160,8 +206,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
+    private int m_IDKSchemeIndex = -1;
+    public InputControlScheme IDKScheme
+    {
+        get
+        {
+            if (m_IDKSchemeIndex == -1) m_IDKSchemeIndex = asset.FindControlSchemeIndex("IDK");
+            return asset.controlSchemes[m_IDKSchemeIndex];
+        }
+    }
     public interface IPlayerControlsActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnPickUpBall(InputAction.CallbackContext context);
     }
 }
