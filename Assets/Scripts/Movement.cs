@@ -6,14 +6,13 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [HideInInspector]
-    public Controls playerControls;
+    [HideInInspector] public InputActionMap playerControls;
     Rigidbody2D rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerControls = new Controls();
+        playerControls = GetComponent<PlayerInput>().currentActionMap;
     }
 
     private void FixedUpdate()

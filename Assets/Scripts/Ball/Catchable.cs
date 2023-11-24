@@ -21,8 +21,8 @@ public class Catchable : MonoBehaviour
     {
         // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
         if (!col.gameObject.CompareTag("Player")) return;
-        var controls = col.GetComponent<Movement>().playerControls; 
-        controls.PlayerControls.PickUpBall.performed += Callback;
+        var controls = col.GetComponent<Movement>().playerControls;
+        controls["PickUpBall"].performed += Callback;
         catchingObject = col.gameObject;
     }
 
@@ -30,8 +30,8 @@ public class Catchable : MonoBehaviour
     {
         // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
         if (!col.gameObject.CompareTag("Player")) return;
-        var controls = col.GetComponent<Movement>().playerControls; 
-        controls.PlayerControls.PickUpBall.performed -= Callback;
+        var controls = col.GetComponent<Movement>().playerControls;
+        controls["PickUpBall"].performed -= Callback;
         catchingObject = null;
     }
 
