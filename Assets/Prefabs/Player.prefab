@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3290995102950902705}
   - component: {fileID: 3264304452832903244}
   - component: {fileID: 6156023262946964583}
+  - component: {fileID: 4362779501194955499}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -100,6 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f67d71af0c58249855df16a2bd2bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerControls:
+    m_Name: 
+    m_Id: 
+    m_Asset: {fileID: 0}
+    m_Actions: []
+    m_Bindings: []
 --- !u!61 &3290995102950902705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -214,7 +221,19 @@ MonoBehaviour:
     m_ActionId: d47fd6fc-32bf-4882-81bf-70db288ed488
     m_ActionName: PlayerControls/Movement[/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4362779501194955499}
+        m_TargetAssemblyTypeName: Catching, Assembly-CSharp
+        m_MethodName: Catch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b359a3d8-ace2-48e4-a100-ba2b907f63e3
     m_ActionName: PlayerControls/PickUpBall[/XInputControllerWindows/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 1
@@ -222,3 +241,15 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4362779501194955499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107407215416452394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 892b7461f2e582c43bd81e739a268416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
