@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    Controls playerControls;
+    [HideInInspector] public Controls playerControls;
     Rigidbody2D rb;
 
     void Awake()
