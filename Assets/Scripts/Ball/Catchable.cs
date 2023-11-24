@@ -41,7 +41,6 @@ public class Catchable : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
         if (col.gameObject.CompareTag("Player"))
         {
             if (!objectsInRange.Contains(col.gameObject))
