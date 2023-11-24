@@ -13,9 +13,7 @@ public class Movement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        //playerControls = new Controls();
-        //playerControls.PlayerControls.Movement.performed += ctx => UpdateSpeed(ctx.ReadValue<Vector2>());
-        //playerControls.PlayerControls.Movement.canceled += ctx => UpdateSpeed(Vector2.zero);
+        playerControls = new Controls();
     }
 
     private void FixedUpdate()
@@ -30,7 +28,6 @@ public class Movement : MonoBehaviour
 
     public void UpdateSpeed(InputAction.CallbackContext ctx)
     {
-        //movementDirection = newSpeed;
         rb.velocity = ctx.ReadValue<Vector2>();
     }
 
