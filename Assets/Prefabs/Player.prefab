@@ -218,7 +218,7 @@ MonoBehaviour:
     m_ActionId: b359a3d8-ace2-48e4-a100-ba2b907f63e3
     m_ActionName: PlayerControls/PickUpBall[/XInputControllerWindows/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: IDK
+  m_DefaultControlScheme: Controller
   m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
