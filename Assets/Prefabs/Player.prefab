@@ -198,7 +198,19 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1388959351987898840}
+        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+        m_MethodName: UpdateSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d47fd6fc-32bf-4882-81bf-70db288ed488
     m_ActionName: PlayerControls/Movement[/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
@@ -206,7 +218,7 @@ MonoBehaviour:
     m_ActionId: b359a3d8-ace2-48e4-a100-ba2b907f63e3
     m_ActionName: PlayerControls/PickUpBall[/XInputControllerWindows/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: IDK
   m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
