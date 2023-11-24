@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,9 @@ public class Catchable : MonoBehaviour
 {
     [SerializeField] private float catchRange = 5;
     public bool isCaught { get; protected set; }
-    protected GameObject catchingObject;
+    protected GameObject playerInRange;
+    protected int holdingPlayerDeviceID;
+    protected GameObject holdingPlayer;
     private CircleCollider2D playerDetector;
 
     void Start()
@@ -23,7 +26,7 @@ public class Catchable : MonoBehaviour
         if (!col.gameObject.CompareTag("Player")) return;
         var controls = col.GetComponent<Movement>().playerControls;
         controls["PickUpBall"].performed += Callback;
-        catchingObject = col.gameObject;
+        playerInRange = col.gameObject;
     }
 
     private void OnTriggerExit2D(Collider2D col)
@@ -32,17 +35,36 @@ public class Catchable : MonoBehaviour
         if (!col.gameObject.CompareTag("Player")) return;
         var controls = col.GetComponent<Movement>().playerControls;
         controls["PickUpBall"].performed -= Callback;
-        catchingObject = null;
+        playerInRange = null;
     }
 
     private void Callback(InputAction.CallbackContext ctx)
     {
-        if(!isCaught)
-            Catch(catchingObject);
-        else
-            Release(catchingObject);
+        if (!isCaught)
+        {
+            holdingPlayerDeviceID = ctx.control.device.deviceId;
+            holdingPlayer = playerInRange;
+            Catch(holdingPlayer);
+            Debug.Log(holdingPlayerDeviceID);
+        }
+        else if(holdingPlayerDeviceID == ctx.control.device.deviceId)
+        {
+            Debug.Log(holdingPlayerDeviceID);
+            Release(playerInRange);
+            holdingPlayer = null;
+            holdingPlayerDeviceID = -1;
+        }
     }
-    
-    protected virtual void Catch(GameObject catching) {}
-    protected virtual void Release(GameObject releasing) {}
+
+    protected virtual void Catch(GameObject catching)
+    {
+        isCaught = true;
+        GetComponent<CircleCollider2D>().enabled = false;
+    }
+
+    protected virtual void Release(GameObject releasing)
+    {
+        isCaught = false;
+        GetComponent<CircleCollider2D>().enabled = true;
+    }
 }
