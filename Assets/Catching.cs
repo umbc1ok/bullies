@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 
 public class Catching : MonoBehaviour
 {
-    Ball ball;
+    Catchable ball;
 
     public void Awake()
     {
         // idk if i should use it but idc
-        ball = FindFirstObjectByType<Ball>();
+        ball = FindFirstObjectByType<Catchable>();
     }
 
     public void Catch(InputAction.CallbackContext ctx)

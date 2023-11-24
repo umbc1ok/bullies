@@ -20,17 +20,17 @@ public class Catchable : MonoBehaviour
 
     public void GetCaught(GameObject catcherCandidate)
     {
-        if (objectsInRange.Contains(catcher) && catcher == null)
+        if (objectsInRange.Contains(catcherCandidate) && catcher == null)
         {
             catcher = catcherCandidate;
             isCaught = true;
             GetComponent<CircleCollider2D>().enabled = false;
         }
-        if(catcher == catcherCandidate)
+        else if(catcher == catcherCandidate)
         {
-            isCaught=false;
-            catcher = null;
             GetComponent<CircleCollider2D>().enabled = true;
+            isCaught = false;
+            catcher = null;
         }
     }
 
@@ -46,7 +46,7 @@ public class Catchable : MonoBehaviour
         {
             if (!objectsInRange.Contains(col.gameObject))
             {
-                objectsInRange.Add(gameObject); 
+                objectsInRange.Add(col.gameObject); 
             }
         }
     }
@@ -57,7 +57,7 @@ public class Catchable : MonoBehaviour
         {
             if (objectsInRange.Contains(col.gameObject))
             {
-                objectsInRange.Remove(gameObject);
+                objectsInRange.Remove(col.gameObject);
             }
         }
     }
