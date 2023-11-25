@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class Catching : MonoBehaviour
 {
     Catchable ball;
+    public bool holdingBall = false;
 
     public void Awake()
     {
@@ -15,6 +16,13 @@ public class Catching : MonoBehaviour
 
     public void Catch(InputAction.CallbackContext ctx)
     {
-        ball.GetCaught(this.gameObject);
+        if (!holdingBall)
+        {
+            ball.GetCaught(this);
+        }
+        else
+        {
+            ball.GetReleased(this);
+        }
     }
 }

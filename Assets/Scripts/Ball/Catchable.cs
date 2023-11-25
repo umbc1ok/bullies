@@ -18,21 +18,31 @@ public class Catchable : MonoBehaviour
         playerDetector.radius = catchRange;
     }
 
-    public void GetCaught(GameObject catcherCandidate)
+    public void GetCaught(Catching catcherCandidate)
     {
-        if (objectsInRange.Contains(catcherCandidate) && catcher == null)
+        if (objectsInRange.Contains(catcherCandidate.gameObject) && catcher == null)
         {
-            catcher = catcherCandidate;
+            catcher = catcherCandidate.gameObject;
             isCaught = true;
             GetComponent<CircleCollider2D>().enabled = false;
-        }
-        else if(catcher == catcherCandidate)
-        {
-            GetComponent<CircleCollider2D>().enabled = true;
-            isCaught = false;
-            catcher = null;
+            GetComponent<Rigidbody2D>().simulated = false;
+            catcherCandidate.holdingBall = true;
         }
     }
+
+    public void GetReleased(Catching catcherCandidate)
+    {
+        if (catcher == catcherCandidate.gameObject)
+        {
+            catcher = null;
+            isCaught = false;
+            GetComponent<CircleCollider2D>().enabled = true;
+            GetComponent<Rigidbody2D>().simulated = true;
+            catcherCandidate.holdingBall = false;
+        }
+    }
+
+
 
     void FixedUpdate()
     {
