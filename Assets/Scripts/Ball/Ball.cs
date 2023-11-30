@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Ball : Catchable
 {
+    [SerializeField] private Rigidbody2D rb;
     
     protected override void Catch(GameObject catching)
     {
@@ -18,6 +19,13 @@ public class Ball : Catchable
         base.Release(releasing);
         
         Debug.Log("released");
+    }
+
+
+
+    public void ThrowMe(Vector2 direction, float throwForce)
+    {
+        rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
     }
 
     private void Update()
