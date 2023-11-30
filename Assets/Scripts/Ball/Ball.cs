@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Ball : Catchable
 {
-    
     protected override void Catch(GameObject catching)
     {
         base.Catch(catching);
