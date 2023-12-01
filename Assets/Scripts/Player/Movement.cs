@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,30 +7,25 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [HideInInspector] public InputActionMap playerControls;
+    [SerializeField] private float speed;
+    InputSetup inputSetup;
     Rigidbody2D rb;
 
-    void Awake()
+    void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerControls = GetComponent<PlayerInput>().currentActionMap;
+        inputSetup = GetComponent<InputSetup>();
+        inputSetup.OnLeftAnalogInput += UpdateSpeed;
     }
 
-    private void FixedUpdate()
+    void UpdateSpeed(Vector2 leftStickValue)
     {
-        Move();
-    }
-
-    void Move()
-    {
+        rb.velocity = leftStickValue * speed;
         rb.MovePosition(rb.position + rb.velocity);
     }
 
-    public void UpdateSpeed(InputAction.CallbackContext ctx)
+    void OnDestroy()
     {
-        rb.velocity = ctx.ReadValue<Vector2>();
+        inputSetup.OnLeftAnalogInput -= UpdateSpeed;
     }
-
-
-
 }

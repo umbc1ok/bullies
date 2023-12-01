@@ -6,23 +6,18 @@ using UnityEngine;
 public class Ball : Catchable
 {
     [SerializeField] private Rigidbody2D rb;
-    
-    protected override void Catch(GameObject catching)
+    protected override void Catch()
     {
-        base.Catch(catching);
-        
+        base.Catch();
         Debug.Log("caught");
     }
 
-    protected override void Release(GameObject releasing)
+    protected override void Release()
     {
-        base.Release(releasing);
-        
+        base.Release();
         Debug.Log("released");
     }
-
-
-
+    
     public void ThrowMe(Vector2 direction, float throwForce)
     {
         rb.AddForce(direction * throwForce, ForceMode2D.Impulse);
@@ -31,6 +26,6 @@ public class Ball : Catchable
     private void Update()
     {
         if (isCaught)
-            transform.position = playerInRange.transform.position;
+            transform.position = holder.transform.position;
     }
 }

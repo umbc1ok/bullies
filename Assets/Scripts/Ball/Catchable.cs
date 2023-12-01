@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,10 +10,9 @@ public class Catchable : MonoBehaviour
 {
     [SerializeField] private float catchRange = 5;
     public bool isCaught { get; protected set; }
-    protected GameObject playerInRange;
-    protected int holdingPlayerDeviceID;
-    protected GameObject holdingPlayer;
+    protected GameObject holder;
     private CircleCollider2D playerDetector;
+    private List<InputSetup> playersInRange = new(); // Of type InputSetup for convenience 
 
     void Start()
     {
@@ -24,45 +24,46 @@ public class Catchable : MonoBehaviour
     {
         // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
         if (!col.gameObject.CompareTag("Player")) return;
-        var controls = col.GetComponent<Movement>().playerControls;
-        controls["PickUpBall"].performed += Callback;
-        playerInRange = col.gameObject;
+        var input = col.GetComponent<InputSetup>();
+        playersInRange.Add(col.GetComponent<InputSetup>());
+        input.OnRightTriggerPressed += Callback;
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
         // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
         if (!col.gameObject.CompareTag("Player")) return;
-        var controls = col.GetComponent<Movement>().playerControls;
-        controls["PickUpBall"].performed -= Callback;
-        playerInRange = null;
+        var input = col.GetComponent<InputSetup>();
+        playersInRange.Remove(col.GetComponent<InputSetup>());
+        input.OnRightTriggerPressed -= Callback;
     }
 
-    private void Callback(InputAction.CallbackContext ctx)
+    private void Callback(int playerID)
     {
-        if (!isCaught)
+        var matchingInput = playersInRange.FirstOrDefault(input => input.GetPlayerID() == playerID);
+
+        if (matchingInput != null)
         {
-            holdingPlayerDeviceID = ctx.control.device.deviceId;
-            holdingPlayer = playerInRange;
-            Catch(holdingPlayer);
-            Debug.Log(holdingPlayerDeviceID);
-        }
-        else if(holdingPlayerDeviceID == ctx.control.device.deviceId)
-        {
-            Debug.Log(holdingPlayerDeviceID);
-            Release(playerInRange);
-            holdingPlayer = null;
-            holdingPlayerDeviceID = -1;
+            if (isCaught)
+            {
+                Release();
+                holder = null;
+            }
+            else
+            {
+                holder = matchingInput.gameObject;
+                Catch();
+            }
         }
     }
 
-    protected virtual void Catch(GameObject catching)
+    protected virtual void Catch()
     {
         isCaught = true;
         GetComponent<CircleCollider2D>().enabled = false;
     }
 
-    protected virtual void Release(GameObject releasing)
+    protected virtual void Release()
     {
         isCaught = false;
         GetComponent<CircleCollider2D>().enabled = true;
