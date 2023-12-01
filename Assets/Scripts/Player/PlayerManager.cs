@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
 
             // Instantiate player
             players.Add(Instantiate(playerPrefab, worldPosition, Quaternion.identity));
+            players[i].GetComponent<Player>().playerID = i;
         }
     }
 }

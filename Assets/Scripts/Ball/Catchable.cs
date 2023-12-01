@@ -2,47 +2,53 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Assertions;
 
-public class Catchable : MonoBehaviour
+public abstract class Catchable : MonoBehaviour
 {
+    public Player caughtBy;
+
+    [NonSerialized] public ColliderList colliderList;
+
+    public bool IsCaught { get; private set; }
+
     [SerializeField] private float catchRange = 5;
-    public bool isCaught { get; protected set; }
-    protected GameObject catchingObject;
-    private CircleCollider2D playerDetector;
+    [SerializeField] private CircleCollider2D catchCollider;
 
-    void Start()
+    protected virtual void Awake()
     {
-        playerDetector = transform.GetChild(0).GetComponent<CircleCollider2D>();
-        playerDetector.radius = catchRange;
+        Assert.IsNotNull(catchCollider);
+
+        if (colliderList == null)
+        {
+            colliderList = GetComponent<ColliderList>();
+            Assert.IsNotNull(colliderList);
+        }
+
+        catchCollider.radius = catchRange;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    public virtual void Catch(Player player)
     {
-        // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
-        if (!col.gameObject.CompareTag("Player")) return;
-        var controls = col.GetComponent<Movement>().playerControls;
-        controls["PickUpBall"].performed += Callback;
-        catchingObject = col.gameObject;
+        Assert.IsFalse(IsCaught);
+
+        caughtBy = player;
+        player.caughtObject = this;
+        IsCaught = true;
     }
 
-    private void OnTriggerExit2D(Collider2D col)
+    public virtual void Release(Player player)
     {
-        // Check if it's player. TODO: Check WHICH player is that, to prevent bugs like releasing not your catchable
-        if (!col.gameObject.CompareTag("Player")) return;
-        var controls = col.GetComponent<Movement>().playerControls;
-        controls["PickUpBall"].performed -= Callback;
-        catchingObject = null;
+        Assert.IsTrue(IsCaught);
+        Assert.AreEqual(player, caughtBy);
+
+        caughtBy = null;
+        player.caughtObject = null;
+        IsCaught = false;
     }
 
-    private void Callback(InputAction.CallbackContext ctx)
+    protected virtual void Update()
     {
-        if(!isCaught)
-            Catch(catchingObject);
-        else
-            Release(catchingObject);
+
     }
-    
-    protected virtual void Catch(GameObject catching) {}
-    protected virtual void Release(GameObject releasing) {}
 }
