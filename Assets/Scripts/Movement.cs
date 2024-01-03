@@ -1,17 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [HideInInspector] public InputActionMap playerControls;
-    Rigidbody2D rb;
+    [NonSerialized] public InputActionMap playerControls;
 
-    void Awake()
+    private new Rigidbody2D rigidbody;
+
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
         playerControls = GetComponent<PlayerInput>().currentActionMap;
     }
 
@@ -20,16 +21,13 @@ public class Movement : MonoBehaviour
         Move();
     }
 
-    void Move()
+    private void Move()
     {
-        rb.MovePosition(rb.position + rb.velocity);
+        rigidbody.MovePosition(rigidbody.position + rigidbody.velocity);
     }
 
-    public void UpdateSpeed(InputAction.CallbackContext ctx)
+    public void UpdateSpeed(InputAction.CallbackContext callbackContext)
     {
-        rb.velocity = ctx.ReadValue<Vector2>();
+        rigidbody.velocity = callbackContext.ReadValue<Vector2>();
     }
-
-
-
 }

@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8588188880849715466}
   - component: {fileID: 1028327220451970495}
-  - component: {fileID: 1388959351987898840}
   - component: {fileID: 3290995102950902705}
   - component: {fileID: 3264304452832903244}
   - component: {fileID: 6156023262946964583}
+  - component: {fileID: 3820209929085481295}
+  - component: {fileID: 8825781007838232050}
+  - component: {fileID: 4198237542578752698}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -88,18 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1388959351987898840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1107407215416452394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37f67d71af0c58249855df16a2bd2bb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3290995102950902705
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -171,7 +161,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &6156023262946964583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,8 +189,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1388959351987898840}
-        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+      - m_Target: {fileID: 3820209929085481295}
+        m_TargetAssemblyTypeName: OurPlayerInput, Assembly-CSharp
         m_MethodName: UpdateSpeed
         m_Mode: 0
         m_Arguments:
@@ -214,7 +204,19 @@ MonoBehaviour:
     m_ActionId: d47fd6fc-32bf-4882-81bf-70db288ed488
     m_ActionName: PlayerControls/Movement[/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3820209929085481295}
+        m_TargetAssemblyTypeName: OurPlayerInput, Assembly-CSharp
+        m_MethodName: Catch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b359a3d8-ace2-48e4-a100-ba2b907f63e3
     m_ActionName: PlayerControls/PickUpBall[/XInputControllerWindows/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 1
@@ -222,3 +224,43 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3820209929085481295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107407215416452394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e23da8ae86bd1d40bb40696676dfddd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8825781007838232050}
+--- !u!114 &8825781007838232050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107407215416452394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b056d24fdc54d84f827d6493f3cb348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
+  caughtObject: {fileID: 0}
+--- !u!114 &4198237542578752698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107407215416452394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc4d00bd4a6a040b9cf208421f4df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliders: []

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9070627915484521908}
   - component: {fileID: 4580221049934351176}
   - component: {fileID: 5047306517244895566}
+  - component: {fileID: 4115494777777732994}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -162,7 +163,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add0f514661118a4cbe965ac4b091741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  caughtBy: {fileID: 0}
   catchRange: 5
+  catchCollider: {fileID: 6072091229285309021}
+--- !u!114 &4115494777777732994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6183645239817830424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc4d00bd4a6a040b9cf208421f4df7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliders: []
 --- !u!1 &7280954726584944059
 GameObject:
   m_ObjectHideFlags: 0
