@@ -8,28 +8,35 @@ public class Pathfollower : MonoBehaviour
     public List<GameObject> waypoints = new List<GameObject>();
     int currentWaypointIndex = 0;
     public float speed = 5.0f;
+    public bool move = false;
     // Start is called before the first frame update
     void Start()
     {
         RotateTowardsWaypoint();
     }
 
+    public void StartMoving()
+    {
+        move = true;
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        this.transform.position += (waypoints[currentWaypointIndex].transform.position - this.transform.position).normalized * Time.deltaTime * speed;
-        
-        Vector3 distance = waypoints[currentWaypointIndex].transform.position - this.transform.position;
-        if(distance.magnitude<0.1f)
+        if (move)
         {
-            currentWaypointIndex++;
-            if(currentWaypointIndex >= waypoints.Count)
+            this.transform.position += (waypoints[currentWaypointIndex].transform.position - this.transform.position).normalized * Time.deltaTime * speed;
+        
+            Vector3 distance = waypoints[currentWaypointIndex].transform.position - this.transform.position;
+            if(distance.magnitude<0.1f)
             {
-                currentWaypointIndex = 0;
-            }
-            RotateTowardsWaypoint();
+                currentWaypointIndex++;
+                if(currentWaypointIndex >= waypoints.Count)
+                {
+                    currentWaypointIndex = 0;
+                }
+                RotateTowardsWaypoint();
 
+            }
         }
     }
 

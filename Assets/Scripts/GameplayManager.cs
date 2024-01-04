@@ -8,38 +8,49 @@ using UnityEngine.UIElements;
 public class GameplayManager : MonoBehaviour
 {
     public  GameObject loseMenu;
+    public  GameObject winMenu;
+    public  GameObject overlay;
+    public  GameObject startMenu;
     public TMP_Text timeDisplay;
+    public TMP_Text countdownToGame;
+    public Pathfollower teacher;
+    public int countdownTimer = 3;
     public int score = 0;
     public int maxScore = 8;
     public int secondsForGame = 20;
     private int secondsLeft;
     private float timeFromBeginning;
+    bool countdown = true;
     // Start is called before the first frame update
 
 
     private void Start()
     {
-        secondsLeft = secondsForGame;
-        timeDisplay.text = secondsLeft.ToString();
-        timeFromBeginning = 0;
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        timeFromBeginning += Time.deltaTime;
-        if(timeFromBeginning > 1)
+        if (countdown)
         {
-            secondsLeft--;
-            timeDisplay.text = secondsLeft.ToString();
-            if (secondsLeft <= 0)
-            {
-                Lose();
-            }
-            timeFromBeginning = 0;
+            Countdown();
         }
-        
+        else
+        {
+            timeFromBeginning += Time.deltaTime;
+            if(timeFromBeginning > 1)
+            {
+                secondsLeft--;
+                timeDisplay.text = secondsLeft.ToString();
+                if (secondsLeft <= 0)
+                {
+                    Lose();
+                }
+                timeFromBeginning = 0;
+            }
+        }
     }
 
 
@@ -47,8 +58,8 @@ public class GameplayManager : MonoBehaviour
     {
         Debug.Log("You lose!");
         loseMenu.SetActive(true);
-        // wait for 3 seconds
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        overlay.SetActive(false);
+
     }
 
 
@@ -65,11 +76,46 @@ public class GameplayManager : MonoBehaviour
     private void Win()
     {
         Debug.Log("You win!");
+        winMenu.SetActive(true);
+        overlay.SetActive(false);
+        
+    }
+
+    public void StartAgain()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void StartGame()
+    {
+        overlay.SetActive(true);
+        startMenu.SetActive(false);
+        countdownToGame.gameObject.SetActive(true);
+        countdown = true;
 
+    }
 
+    public void Countdown()
+    {
+
+        timeFromBeginning += Time.deltaTime;
+        if (timeFromBeginning > 1)
+        {
+            countdownTimer--;
+            timeFromBeginning = 0;
+        }
+        if(countdownTimer <= 0)
+        {
+            countdown = false;
+            secondsLeft = secondsForGame;
+            timeDisplay.text = secondsLeft.ToString();
+            timeFromBeginning = 0;
+            countdownToGame.gameObject.SetActive(false);
+            teacher.StartMoving();
+        }
+        countdownToGame.text = countdownTimer.ToString();
+
+    }
 
 
 }
