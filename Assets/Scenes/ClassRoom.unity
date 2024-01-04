@@ -4610,6 +4610,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7725802195704463195, guid: 34ad61bb485e69647aac5e8eca555015, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8118372
+      objectReference: {fileID: 0}
+    - target: {fileID: 7725802195704463195, guid: 34ad61bb485e69647aac5e8eca555015, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7725802195704463195, guid: 34ad61bb485e69647aac5e8eca555015, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8223232561163944241, guid: 34ad61bb485e69647aac5e8eca555015, type: 3}
       propertyPath: gameplayManager
       value: 
